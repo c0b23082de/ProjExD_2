@@ -4,7 +4,7 @@ import pygame as pg
 import random
 
 
-WIDTH, HEIGHT = 1600, 900
+WIDTH, HEIGHT = 1000, 700
 DELTA = {  # 移動量辞書
     pg.K_UP: (0, -5),
     pg.K_DOWN: (0, +5),
@@ -46,6 +46,8 @@ def main():
         for event in pg.event.get():
             if event.type == pg.QUIT: 
                 return
+        if kk_rct.colliderect(bb_rct):  # 衝突判定
+            return  # ゲームオーバー
         screen.blit(bg_img, [0, 0]) 
 
         key_lst = pg.key.get_pressed()
