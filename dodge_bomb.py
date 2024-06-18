@@ -11,6 +11,7 @@ DELTA = {  # 移動量辞書
     pg.K_LEFT: (-5, 0),
     pg.K_RIGHT: (+5, 0),
 }
+
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 def check_bound(rct: pg.Rect) -> tuple[bool, bool]:
@@ -25,6 +26,8 @@ def check_bound(rct: pg.Rect) -> tuple[bool, bool]:
     if rct.top < 0 or HEIGHT < rct.bottom:  # 縦方向判定
         tate = False
     return yoko, tate
+
+# def muki():
 
 
 def main():
@@ -42,12 +45,23 @@ def main():
     vx, vy = +5, +5  # 爆弾の横方向速度，縦方向速度
     clock = pg.time.Clock()
     tmr = 0
+
     while True:
         for event in pg.event.get():
             if event.type == pg.QUIT: 
                 return
+            
         if kk_rct.colliderect(bb_rct):  # 衝突判定
-            return  # ゲームオーバー
+            a = pg.Surface((1000,700))
+            pg.draw.rect(a,(0,0,0),pg.Rect(0,0,1000,700))
+            a.set_alpha(100)
+            screen.blit(a,[0,0])
+            fonto = pg.font.Font(None, 80) 
+            txt = fonto.render("Game Over", True, (255, 255, 255)) 
+            screen.blit(txt, [350, 300])
+            pg.display.update()
+            clock.tick(0.5)
+            return
         screen.blit(bg_img, [0, 0]) 
 
         key_lst = pg.key.get_pressed()
@@ -71,7 +85,13 @@ def main():
         pg.display.update()
         tmr += 1
         clock.tick(50)
-
+        # accs = [a for a in range(1, 11)]
+        # for r in range(1, 11):
+        #     bb_img = pg.Surface((20*r, 20*r))
+        #     pg.draw.circle(bb_img, (255, 0, 0), (10*r, 10*r), 10*r)
+        #     avx = vx*bb_accs[min(tmr//500, 9)]
+        #     bb_img = bb_imgs[min(tmr//500, 9)]
+        # screen.blit(bb_img)
 
 if __name__ == "__main__":
     pg.init()
